@@ -1,6 +1,5 @@
-import { pgTable, serial, integer } from 'drizzle-orm/pg-core';
-
-export const user = pgTable('user', {
-	id: serial('id').primaryKey(),
-	age: integer('age')
-});
+export * from "./schema/auth-schema";
+export * from "./schema/workspace";
+export * from "./schema/member";
+export * from "./schema/todo";
+export * from "./schema/invitation";
