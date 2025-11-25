@@ -1,9 +1,6 @@
-import { betterAuth } from "better-auth";
-import { db } from "./server/db";
-import { drizzleAdapter } from "better-auth/adapters/drizzle";
-
-export const auth = betterAuth({
-    database: drizzleAdapter(db, {
-        provider: "pg", // or "mysql", "sqlite"
-    }),
-});
+import { createAuthClient } from "better-auth/svelte"
+import { env } from "$env/dynamic/public"
+export const authClient = createAuthClient({
+    /** The base URL of the server (optional if you're using the same domain) */
+    baseURL: env.PUBLIC_BETTER_AUTH_URL
+})
