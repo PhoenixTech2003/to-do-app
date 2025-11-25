@@ -3,6 +3,10 @@
 	import { authClient } from '$lib/auth';
 	import { Button } from '$lib/components/ui/button';
 	import { toast } from 'svelte-sonner';
+	import CreateWorkspaceDialog from '$lib/components/dashbaord/CreateWorkspaceDialog.svelte';
+	import type { PageData } from './$types';
+
+	let { data }: { data: PageData } = $props();
 
 	const session = authClient.useSession();
 	async function handleSignOut() {
@@ -24,4 +28,5 @@
 	{:else}
 		<Button href="/signin">Sign In</Button>
 	{/if}
+	<CreateWorkspaceDialog {data} />
 </div>

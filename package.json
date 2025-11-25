@@ -57,6 +57,7 @@
 		"vite": "^7.2.2"
 	},
 	"dependencies": {
+		"@paralleldrive/cuid2": "^3.0.4",
 		"@t3-oss/env-core": "^0.13.8",
 		"better-auth": "^1.4.1",
 		"postgres": "^3.4.7",
