@@ -5,6 +5,7 @@
 	import { toast } from 'svelte-sonner';
 	import CreateWorkspaceDialog from '$lib/components/dashbaord/CreateWorkspaceDialog.svelte';
 	import type { PageData } from './$types';
+	import DeleteWorkspaceDialog from '$lib/components/dashbaord/DeleteWorkspaceDialog.svelte';
 
 	let { data }: { data: PageData } = $props();
 
@@ -29,4 +30,12 @@
 		<Button href="/signin">Sign In</Button>
 	{/if}
 	<CreateWorkspaceDialog {data} />
+	<h1 class="text-2xl">Your Workspaces</h1>
+
+	{#each data.userWorkSpacesData.userWorkSpaces as userWorkSpace (userWorkSpace.id)}
+		<p>
+			<a href="dashboard/workspace/{userWorkSpace.id}">{userWorkSpace.name}</a>
+			<DeleteWorkspaceDialog workspaceName={userWorkSpace.name} />
+		</p>
+	{/each}
 </div>

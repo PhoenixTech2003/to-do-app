@@ -28,7 +28,7 @@
 	const { form: formData, enhance, delayed } = form;
 </script>
 
-<form method="POST" use:enhance>
+<form method="POST" action="/dashboard?/createWorkspace" use:enhance>
 	<Form.Field {form} name="workspaceName">
 		<Form.Control>
 			{#snippet children({ props })}

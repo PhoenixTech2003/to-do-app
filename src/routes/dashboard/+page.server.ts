@@ -5,15 +5,25 @@ import type { PageServerLoad } from './$types';
 import { fail, redirect } from "@sveltejs/kit";
 import { createWorkspace } from "$lib/server/db/mutations.js"
 import { auth } from "$lib/auth.server.js";
+import { getAllUserWorkspaces } from "$lib/server/db/queries.js";
 
-export const load: PageServerLoad = async () => {
+export const load: PageServerLoad = async ({ request }) => {
+    const userData = await auth.api.getSession({
+        headers: request.headers
+    })
+    if (!userData) {
+        redirect(307, "/")
+    }
+    const userId = userData.session.userId
+    const userWorkSpacesData = await getAllUserWorkspaces({ userId })
     return {
-        form: await superValidate(zod4(createWorkspaceFormSchema))
+        form: await superValidate(zod4(createWorkspaceFormSchema)),
+        userWorkSpacesData
     }
 }
 
 export const actions = {
-    default: async (event) => {
+    createWorkspace: async (event) => {
         const form = await superValidate(event, zod4(createWorkspaceFormSchema))
         try {
             if (!form.valid) {
