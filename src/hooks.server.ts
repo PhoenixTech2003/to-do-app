@@ -17,6 +17,7 @@ export async function handle({ event, resolve }) {
     if (session) {
         event.locals.session = session.session;
         event.locals.user = session.user;
+
     }
     return svelteKitHandler({ event, resolve, auth, building });
 }

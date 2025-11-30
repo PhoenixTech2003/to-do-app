@@ -8,7 +8,7 @@ export const statusEnum = pgEnum("status", ['IN PROGRESS', 'COMPLETED', 'OVERDUE
 
 export const todo = pgTable("todo", {
     id: text("id").primaryKey(),
-    workspaceId: text("workspace_id").notNull().references(() => workspace.id, { onDelete: "cascade" }),
+    listId: text("list_id").notNull().references(() => list.id, { onDelete: "cascade" }),
     title: text("title").notNull(),
     status: statusEnum("status").default("IN PROGRESS"),
     createdById: text("created_by_id").notNull().references(() => user.id, { onDelete: "cascade" }),
