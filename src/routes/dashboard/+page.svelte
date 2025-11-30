@@ -4,10 +4,10 @@
 	import { Button } from '$lib/components/ui/button';
 	import { toast } from 'svelte-sonner';
 	import CreateWorkspaceDialog from '$lib/components/dashbaord/CreateWorkspaceDialog.svelte';
-	import type { PageData } from './$types';
+	import type { PageProps } from './$types';
 	import DeleteWorkspaceDialog from '$lib/components/dashbaord/DeleteWorkspaceDialog.svelte';
 
-	let { data }: { data: PageData } = $props();
+	let { data, form }: PageProps = $props();
 
 	const session = authClient.useSession();
 	async function handleSignOut() {
@@ -35,7 +35,11 @@
 	{#each data.userWorkSpacesData.userWorkSpaces as userWorkSpace (userWorkSpace.id)}
 		<p>
 			<a href="dashboard/workspace/{userWorkSpace.id}">{userWorkSpace.name}</a>
-			<DeleteWorkspaceDialog workspaceName={userWorkSpace.name} />
+			<DeleteWorkspaceDialog
+				workspaceName={userWorkSpace.name}
+				workspaceID={userWorkSpace.id}
+				{data}
+			/>
 		</p>
 	{/each}
 </div>

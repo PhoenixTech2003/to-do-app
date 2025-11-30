@@ -15,9 +15,23 @@ export const createWorkspace = async function createsAWorkspaceForTheLoggedInUse
 
 export const deleteWorkspace = async function deletesSelectedWorkspaceOfAUser({ userId, workspaceId }: { userId: string, workspaceId: string }) {
     try {
-        const deletedWorkSpace = await db.delete(workspace).where(and(eq(workspace.id, workspaceId), eq(user.id, userId))).returning()
+        const deletedWorkSpace = await db.delete(workspace).where(and(eq(workspace.id, workspaceId), eq(workspace.ownerId, userId))).returning()
         return deletedWorkSpace[0]
     } catch (error) {
         console.error(error instanceof Error ? error.message : "An unknown error occured while deleting a workpace")
+        throw new Error("An error occured while deleting the workspace")
+    }
+}
+
+export const updateWorkspace = async function updatesTheValuesOfWorkspace({ workspaceName, workspaceId }: { workspaceName: string, workspaceId: string }) {
+    try {
+        const updatedWorkspace = await db.update(workspace).set({ name: workspaceName }).where(eq(workspace.id, workspaceId)).returning()
+        return {
+            updatedWorkspace: updatedWorkspace[0]
+        }
+    } catch (error) {
+        console.error(error instanceof Error ? error.message : "An unknown error occured while updating the workspace")
+        throw new Error(`Error occured while updating workpace ${workspaceId}`)
+
     }
 }

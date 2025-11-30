@@ -40,7 +40,7 @@
 		<Form.FieldErrors />
 	</Form.Field>
 	<Form.Button disabled={$delayed}
-		>{#if !delayed}Submit{:else}
+		>{#if !$delayed}Submit{:else}
 			Creating Workspace
 		{/if}</Form.Button
 	>
