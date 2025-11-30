@@ -6,6 +6,7 @@
 	import CreateWorkspaceDialog from '$lib/components/dashbaord/CreateWorkspaceDialog.svelte';
 	import type { PageProps } from './$types';
 	import DeleteWorkspaceDialog from '$lib/components/dashbaord/DeleteWorkspaceDialog.svelte';
+	import UpdateWorkspaceDialog from '$lib/components/dashbaord/UpdateWorkspaceDialog.svelte';
 
 	let { data, form }: PageProps = $props();
 
@@ -36,6 +37,11 @@
 		<p>
 			<a href="dashboard/workspace/{userWorkSpace.id}">{userWorkSpace.name}</a>
 			<DeleteWorkspaceDialog
+				workspaceName={userWorkSpace.name}
+				workspaceID={userWorkSpace.id}
+				{data}
+			/>
+			<UpdateWorkspaceDialog
 				workspaceName={userWorkSpace.name}
 				workspaceID={userWorkSpace.id}
 				{data}
