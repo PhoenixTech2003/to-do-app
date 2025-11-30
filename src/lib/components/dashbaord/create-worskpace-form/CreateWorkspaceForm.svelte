@@ -7,7 +7,6 @@
 	import { toast } from 'svelte-sonner';
 
 	let { data }: { data: { form: SuperValidated<Infer<CreateWorkspaceFormSchemaType>> } } = $props();
-	let creating = $state(false);
 	const form = superForm(data.form, {
 		validators: zod4Client(createWorkspaceFormSchema),
 		delayMs: 500,
