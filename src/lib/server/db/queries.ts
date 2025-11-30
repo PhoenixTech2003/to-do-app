@@ -1,6 +1,6 @@
-import { eq } from "drizzle-orm"
+import { and, eq } from "drizzle-orm"
 import { db } from "."
-import { workspace, member } from "./schema"
+import { workspace, member, list, user } from "./schema"
 
 
 export const getAllUserWorkspaces = async function fetchesAllTheLoggedInUsersWorkspaces({ userId }: { userId: string }) {
@@ -32,5 +32,17 @@ export const getAllUserWorkspaces = async function fetchesAllTheLoggedInUsersWor
 }
 
 export const getAllWorkspaceLists = async function fetchesAllListsInAWorkspace({ userID, workspaceID }: { userID: string, workspaceID: string }) {
-
+    try {
+        const userWorkspaceLists = await db.select().from(list).innerJoin(member, eq(list.workspaceId, member.workspaceId)).innerJoin(user, eq(user.id, member.userId)).where(and(eq(list.workspaceId, workspaceID), eq(member.userId, userID)))
+        return {
+            userWorkspaceLists: userWorkspaceLists,
+            userWorkspaceListsError: null
+        }
+    } catch (error) {
+        console.error(error instanceof Error ? error.message : "An unknown error occured while fetching the user workspace lists")
+        return {
+            userWorkspaceLists: null,
+            userWorkspaceListsError: "An error occured while getting your lists"
+        }
+    }
 }
