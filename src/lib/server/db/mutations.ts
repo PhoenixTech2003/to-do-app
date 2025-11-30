@@ -1,12 +1,28 @@
 import { createId } from "@paralleldrive/cuid2"
 import { db } from "."
-import { user, workspace } from "./schema"
+import { user, workspace, member } from "./schema"
 import { and, eq } from "drizzle-orm"
 
 export const createWorkspace = async function createsAWorkspaceForTheLoggedInUser({ workspaceName, userId }: { workspaceName: string, userId: string }) {
     try {
-        const usersWorkspace = await db.insert(workspace).values({ id: createId(), ownerId: userId, name: workspaceName })
-        return usersWorkspace
+        const workspaceId = createId();
+
+        // Create workspace
+        await db.insert(workspace).values({
+            id: workspaceId,
+            ownerId: userId,
+            name: workspaceName
+        });
+
+        // Create membership for the owner
+        await db.insert(member).values({
+            id: createId(),
+            workspaceId: workspaceId,
+            userId: userId,
+            role: "owner"
+        });
+
+        return { id: workspaceId, name: workspaceName };
     } catch (error) {
         console.error(error instanceof Error ? error.message : "Unknown error occured while creating workspace")
         throw new Error("Failed to create workspace")
