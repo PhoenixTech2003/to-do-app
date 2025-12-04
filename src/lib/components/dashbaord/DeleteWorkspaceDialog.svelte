@@ -1,12 +1,11 @@
 <script lang="ts">
 	import * as AlertDialog from '$lib/components/ui/alert-dialog';
-	let { workspaceName }: { workspaceName: string } = $props();
+	let { workspaceName, workspaceId }: { workspaceName: string; workspaceId: string } = $props();
 </script>
 
 <AlertDialog.Root>
 	<AlertDialog.Trigger>Delete</AlertDialog.Trigger>
 	<AlertDialog.Content>
-		
 		<AlertDialog.Header>
 			<AlertDialog.Title
 				>Are you sure you want to delete "{workspaceName}" workspace</AlertDialog.Title
