@@ -1,6 +1,4 @@
-
-import { pgTable, text, timestamp, boolean, pgEnum, type AnyPgColumn } from "drizzle-orm/pg-core";
-import { workspace } from "./workspace";
+import { pgTable, text, timestamp, pgEnum } from "drizzle-orm/pg-core";
 import { user } from "./auth-schema";
 import { list } from "./list";
 

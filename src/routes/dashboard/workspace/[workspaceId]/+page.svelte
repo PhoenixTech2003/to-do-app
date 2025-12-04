@@ -21,7 +21,10 @@
 				<div
 					class="rounded-lg border-2 border-slate-100 bg-white p-6 shadow-sm transition-all hover:border-blue-200 hover:shadow-md"
 				>
-					<a href={workspaceList.list.id} class="block">
+					<a
+						href="/dashboard/workspace/{workspaceList.member.workspaceId}/{workspaceList.list.id}"
+						class="block"
+					>
 						<h2 class="mb-4 text-xl font-bold text-primary">{workspaceList.list.title}</h2>
 					</a>
 					<div class="flex gap-2">

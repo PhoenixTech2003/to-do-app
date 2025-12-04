@@ -1,0 +1,1 @@
+ALTER TABLE "todo" ADD COLUMN "status" "status" DEFAULT 'IN PROGRESS';
