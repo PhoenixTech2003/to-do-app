@@ -5,7 +5,7 @@
 	"type": "module",
 	"scripts": {
 		"dev": "vite dev",
-		"build": "vite build",
+		"build": "bun run db:migrate && vite build",
 		"preview": "vite preview",
 		"prepare": "svelte-kit sync || echo ''",
 		"check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
@@ -15,10 +15,9 @@
 		"db:push": "drizzle-kit push",
 		"db:generate": "drizzle-kit generate",
 		"db:migrate": "drizzle-kit migrate",
-		"db:studio": "drizzle-kit studio"
-
+		"db:studio": "drizzle-kit studio",
+		"postinstall": "bun run db:generate && bun run db:migrate"
 	},
-	"postinstall": "bun run db:generate && bun run db:migrate",
 	"devDependencies": {
 		"@eslint/compat": "^1.4.0",
 		"@eslint/js": "^9.39.1",
@@ -33,7 +32,6 @@
 		"@types/node": "^24",
 		"bits-ui": "^2.11.0",
 		"clsx": "^2.1.1",
-		"drizzle-kit": "^0.31.7",
 		"drizzle-orm": "^0.44.7",
 		"embla-carousel-svelte": "^8.6.0",
 		"eslint": "^9.39.1",
@@ -63,6 +61,7 @@
 		"@paralleldrive/cuid2": "^3.0.4",
 		"@t3-oss/env-core": "^0.13.8",
 		"better-auth": "^1.4.1",
+		"drizzle-kit": "^0.31.7",
 		"lucide-svelte": "^0.555.0",
 		"postgres": "^3.4.7",
 		"zod": "^4.1.12"
