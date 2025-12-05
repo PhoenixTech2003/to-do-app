@@ -1,6 +1,6 @@
 import { createId } from "@paralleldrive/cuid2"
 import { db } from "."
-import { user, workspace, member, list } from "./schema"
+import { workspace, member, list } from "./schema"
 import { and, eq } from "drizzle-orm"
 
 export const createWorkspace = async function createsAWorkspaceForTheLoggedInUser({ workspaceName, userId }: { workspaceName: string, userId: string }) {
@@ -91,5 +91,57 @@ export const deleteList = async function deletesSelectedListOfAUser({ userId, li
     } catch (error) {
         console.error(error instanceof Error ? error.message : "An unknown error occured while deleting a list")
         throw new Error("An error occured while deleting the list")
+    }
+}
+
+import { todo } from "./schema"
+
+export const createTodo = async function createsATodoForAList({ listId, title, dueDate, createdById }: { listId: string, title: string, dueDate: Date, createdById: string }) {
+    try {
+        const todoId = createId();
+
+        await db.insert(todo).values({
+            id: todoId,
+            listId: listId,
+            title: title,
+            dueDate: dueDate,
+            createdById: createdById,
+            status: "IN PROGRESS"
+        });
+
+        return { id: todoId, title: title };
+    } catch (error) {
+        console.error(error instanceof Error ? error.message : "Unknown error occured while creating todo")
+        throw new Error("Failed to create todo")
+    }
+}
+
+export const updateTodo = async function updatesTodoDetails({ todoId, title, status, dueDate }: { todoId: string, title?: string, status?: "IN PROGRESS" | "COMPLETED" | "OVERDUE", dueDate?: Date }) {
+    try {
+        const updateData = {
+            title: title,
+            status: status,
+            dueDate: dueDate
+        }
+
+        const updatedTodo = await db.update(todo).set(updateData).where(eq(todo.id, todoId)).returning();
+        console.log(updatedTodo)
+        return {
+            updatedTodo: updatedTodo[0]
+        }
+
+    } catch (error) {
+        console.error(error instanceof Error ? error.message : "An unknown error occured while updating the todo")
+        throw new Error(`Error occured while updating todo ${todoId}`)
+    }
+}
+
+export const deleteTodo = async function deletesSelectedTodo({ todoId, userId }: { todoId: string, userId: string }) {
+    try {
+        const deletedTodo = await db.delete(todo).where(and(eq(todo.id, todoId), eq(todo.createdById, userId))).returning()
+        return deletedTodo[0]
+    } catch (error) {
+        console.error(error instanceof Error ? error.message : "An unknown error occured while deleting a todo")
+        throw new Error("An error occured while deleting the todo")
     }
 }

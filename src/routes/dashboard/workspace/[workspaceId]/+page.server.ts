@@ -27,6 +27,7 @@ export const load = async ({ request, params }) => {
             userWorkspaceListsData: userWorkspaceLists
         }
     } catch (err) {
+        console.error(err)
         throw error(500, "Failed to load user lists")
 
     }
