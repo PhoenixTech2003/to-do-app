@@ -41,11 +41,10 @@
 	<Form.Field {form} name="workspaceID">
 		<Form.Control>
 			{#snippet children({ props })}
-				<Input {...props} bind:value={$formData.workspaceID} hidden />
+				<Input {...props} type="hidden" bind:value={$formData.workspaceID} />
 			{/snippet}
 		</Form.Control>
 	</Form.Field>
-	<input type="hidden" name="workspaceID" bind:value={$formData.workspaceID} />
 	<AlertDialog.Footer>
 		<AlertDialog.Cancel type="button">Cancel</AlertDialog.Cancel>
 		<Form.Button variant="destructive" type="submit" disabled={$delayed}

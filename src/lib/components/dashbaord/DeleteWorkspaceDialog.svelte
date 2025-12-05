@@ -1,6 +1,18 @@
 <script lang="ts">
 	import * as AlertDialog from '$lib/components/ui/alert-dialog';
-	let { workspaceName, workspaceId }: { workspaceName: string; workspaceId: string } = $props();
+	import DeleteWorkspaceForm from './delete-workspace-form/DeleteWorkspaceForm.svelte';
+	import type { SuperValidated, Infer } from 'sveltekit-superforms';
+	import type { DeleteWorkspaceFormSchemaType } from './delete-workspace-form/form-schema';
+
+	let {
+		workspaceName,
+		workspaceID,
+		data
+	}: {
+		workspaceName: string;
+		workspaceID: string;
+		data: { deleteForm: SuperValidated<Infer<DeleteWorkspaceFormSchemaType>> };
+	} = $props();
 </script>
 
 <AlertDialog.Root>
@@ -15,9 +27,6 @@
 				from our servers.
 			</AlertDialog.Description>
 		</AlertDialog.Header>
-		<AlertDialog.Footer>
-			<AlertDialog.Cancel>Cancel</AlertDialog.Cancel>
-			<AlertDialog.Action>Delete</AlertDialog.Action>
-		</AlertDialog.Footer>
+		<DeleteWorkspaceForm {data} {workspaceID} />
 	</AlertDialog.Content>
 </AlertDialog.Root>
